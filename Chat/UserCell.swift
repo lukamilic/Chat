@@ -72,7 +72,6 @@ class UserCell: UITableViewCell {
     
     let timeLbl: UILabel = {
         let label = UILabel()
-        //label.text = "HH:MM:SS"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.lightGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -90,9 +89,9 @@ class UserCell: UITableViewCell {
         profImgView.widthAnchor.constraint(equalToConstant: 48).isActive = true
         profImgView.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
-        timeLbl.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        timeLbl.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
         timeLbl.centerYAnchor.constraint(equalTo: self.topAnchor, constant: 25).isActive = true
-        timeLbl.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        timeLbl.widthAnchor.constraint(equalToConstant: 110).isActive = true
         timeLbl.heightAnchor.constraint(equalTo: textLabel!.heightAnchor).isActive = true
         
         

@@ -57,10 +57,8 @@ class AllMsg: UIViewController, UITableViewDelegate, UITableViewDataSource {
             messageRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dict = snapshot.value as? [String:Any] {
-                    let message = Message()
-                    message.setValuesForKeys(dict)
-                    // self.messages.append(message)
-                    
+                    let message = Message(dict: dict)
+                   
                     if let chatPartner = message.chatPartner() {
                         
                         self.messagesDict[chatPartner] = message
@@ -72,7 +70,7 @@ class AllMsg: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                     self.timer?.invalidate()
-                    self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.reloadTable), userInfo: nil, repeats: false)
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.reloadTable), userInfo: nil, repeats: false)
                 }
                 
             }, withCancel: nil)

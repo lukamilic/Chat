@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ygm-Wa-iIU">
-                                <rect key="frame" x="50" y="231" width="275" height="110"/>
+                                <rect key="frame" x="50" y="256" width="275" height="110"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VBA-gI-52y">
                                         <rect key="frame" x="0.0" y="0.0" width="275" height="30"/>
@@ -45,7 +45,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3AN-Pi-Bdb">
-                                <rect key="frame" x="50" y="381" width="275" height="84"/>
+                                <rect key="frame" x="50" y="406" width="275" height="84"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E3-DZ-r84">
                                         <rect key="frame" x="0.0" y="0.0" width="275" height="37"/>
@@ -99,7 +99,7 @@
                             <constraint firstAttribute="trailing" secondItem="3AN-Pi-Bdb" secondAttribute="trailing" constant="50" id="gam-Bb-3TV"/>
                             <constraint firstAttribute="trailing" secondItem="Ygm-Wa-iIU" secondAttribute="trailing" constant="50" id="wMf-l9-Jmt"/>
                             <constraint firstItem="O7r-CD-oMy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xcX-Xd-3c8"/>
-                            <constraint firstItem="Ygm-Wa-iIU" firstAttribute="top" secondItem="QEK-xh-DN7" secondAttribute="bottom" constant="25" id="zDp-3Z-yYE"/>
+                            <constraint firstItem="Ygm-Wa-iIU" firstAttribute="top" secondItem="QEK-xh-DN7" secondAttribute="bottom" constant="50" id="zDp-3Z-yYE"/>
                         </constraints>
                     </view>
                     <connections>
@@ -111,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="390" y="53"/>
+            <point key="canvasLocation" x="389.60000000000002" y="52.623688155922046"/>
         </scene>
         <!--All Msg-->
         <scene sceneID="VnG-8k-U53">

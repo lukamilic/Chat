@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
+   
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,64 @@ class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         profileImg.isUserInteractionEnabled = true
         profileImg.addGestureRecognizer(tapGestureRecognizer)
         
+        usernameTextField.autocorrectionType = UITextAutocorrectionType.no
+        emailTextField.autocorrectionType = UITextAutocorrectionType.no
+        passwordTextField.autocorrectionType = UITextAutocorrectionType.no
+        
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        //showActivityIndicatory(uiView: self.view)
+        
+    }
+    
+    func showActivityIndicatory(uiView: UIView) {
+      
+        let loadingView: UIView = UIView()
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = uiView.center
+        loadingView.backgroundColor = UIColor.lightGray
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.whiteLarge
+        actInd.center = CGPoint(x :loadingView.frame.size.width / 2,
+                                y :loadingView.frame.size.height / 2)
+        loadingView.addSubview(actInd)
+        self.view.addSubview(loadingView)
+        actInd.startAnimating()
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height 
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        usernameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        
+        return true
     }
     
     func selectProfileImg() {
@@ -61,14 +120,13 @@ class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         dismiss(animated: true, completion: nil)
     }
     
-
+    
     @IBAction func registerBtn(_ sender: Any) {
-        
+        self.showActivityIndicatory(uiView: self.view)
         guard let userName = usernameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
             
             return
         }
-        
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             
@@ -85,26 +143,27 @@ class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             let storageRef = FIRStorage.storage().reference().child("\(imgName).jpg")
             
             if let profileImage = self.profileImg.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.2) {
-            
-            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                 
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                
-                if let profileimgUrl = metadata?.downloadURL()?.absoluteString {
-                
-                let values = ["name":userName, "email":email, "profileImgUrl":profileimgUrl]
+                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     
-                self.registerUserInDatabaseWithUid(uid: uid, values: values)
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
                     
-                }
-                
-            })
-        }
-    })
-}
+                    if let profileimgUrl = metadata?.downloadURL()?.absoluteString {
+                        
+                        let values = ["name":userName, "email":email, "profileImgUrl":profileimgUrl]
+                        
+                        self.registerUserInDatabaseWithUid(uid: uid, values: values)
+                        
+                        
+                    }
+                    
+                })
+            }
+        })
+    }
     
     func registerUserInDatabaseWithUid(uid: String, values: [String:Any]) {
         
@@ -122,7 +181,7 @@ class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        
+        self.showActivityIndicatory(uiView: self.view)
         guard  let email = emailTextField.text, let password = passwordTextField.text else {
             
             print("not valid")
@@ -142,6 +201,6 @@ class LoginVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             
         })
     }
-
+    
 }
 

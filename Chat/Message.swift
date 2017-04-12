@@ -15,6 +15,9 @@ class Message: NSObject {
     var toId: String?
     var text: String?
     var timestamp: NSNumber?
+    var imageUrl: String?
+    var imgWidth: NSNumber?
+    var imgHeight: NSNumber?
     
     func chatPartner() -> String? {
   
@@ -23,5 +26,19 @@ class Message: NSObject {
         } else {
             return fromId
         }
+    }
+    
+     init(dict: [String:Any]) {
+        super.init()
+        
+        fromId = dict["fromId"] as? String
+        text = dict["text"] as? String
+        toId = dict["toId"] as? String
+        timestamp = dict["timestamp"] as? NSNumber
+        
+        imageUrl = dict["imageUrl"] as? String
+        imgWidth = dict["imgWidth"] as? NSNumber
+        imgHeight = dict["imgHeight"] as? NSNumber
+        
     }
 }
